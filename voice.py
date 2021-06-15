@@ -16,7 +16,13 @@ import bs4 as bs
 import urllib.request
 import requests
 import cv2
-import signal
+
+# import HandTrackingModule
+# import DynamicModule
+# import VirtualMouse
+# import VirtualPainter
+# import video
+
 
 class person:
     name = ''
@@ -110,6 +116,9 @@ def respond(voice_data):
     # 3: greeting
     if there_exists(["how are you", "how are you doing"]):
         engine_speak("I'm very well, thanks for asking " + person_obj.name)
+
+    if there_exists(["thank you so much", "thank you"]):
+        engine_speak("Come on, we are friends now, I can do anything for you " + person_obj.name + "all you got to do is ask")
 
     # 4: time
     if there_exists(["what's the time", "tell me the time", "what time is it", "what is the time"]):
@@ -233,9 +242,12 @@ def respond(voice_data):
         else:
             engine_speak("im sorry i could not find the definition for " + definition)
 
-    if there_exists(["exit", "quit", "goodbye"]):
+    if there_exists(["exit", "quit", "goodbye","bbye","bye"]):
         engine_speak("bye")
         exit()
+
+    if there_exists(["wait"]):
+        engine_speak("I'm in a rush to catch a train," + person_obj.name + ",can't wait for long")
 
     # Current city or region
     if there_exists(["where am i"]):
@@ -248,6 +260,23 @@ def respond(voice_data):
         url = "https://www.google.com/maps/search/Where+am+I+?/"
         webbrowser.get().open(url)
         engine_speak("You must be somewhere near here, as per Google maps")
+
+
+    # 15 Virtual Painter module
+    if there_exists(["open the virtual painter","virtual painter","i want to use the virtual painter","open paint"]):
+        subprocess.call("python VirtualPainter.py")
+
+    # 16 Virtual Mouse module
+    if there_exists(["open the virtual mouse","virtual mouse","i want to use the virtual mouse","use virtual mouse"]):
+        subprocess.call("python VirtualMouse.py")
+
+    # 17 Video control module
+    if there_exists(["open the video controller","open the video navigator","video controller","video navigator","i want to use the video controller","open video controller","open video navigator"]):
+        subprocess.call("python video.py")
+
+    # 18 Finger Count module
+    if there_exists(["open finger count","count my fingers"]):
+        subprocess.call("python FingerCount.py")
 
 
 time.sleep(1)
